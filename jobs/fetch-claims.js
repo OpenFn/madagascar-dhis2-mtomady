@@ -1,4 +1,4 @@
-// operation 1 - grab claim data
+// Get claim data based on webhook payload
 get(
   state => `Claim/${state.data.claimNo}/_history/2`,
   {},
