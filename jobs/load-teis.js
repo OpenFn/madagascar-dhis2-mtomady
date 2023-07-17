@@ -14,7 +14,7 @@ fn(state => {
 });
 
 create('trackedEntityInstances', {
-  program: 'GMfuAqBFS1g',
+  program: 'GMfuAqBFS1g', // Vaccination
   orgUnit: 'KUVJPjmUmWc', // Madagascar
   trackedEntityType: 'x5fZpgCyv50', // Patient
   attributes: state => [

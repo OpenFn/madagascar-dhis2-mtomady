@@ -4,8 +4,7 @@
     {
       "id": "hapi",
       "expression": "jobs/fetch-claims.js",
-      "adaptor": "@openfn/language-http@latest",
-      "data": { "claimNo": 403 },
+      "adaptor": "@openfn/language-http@5.0.1",
       "configuration": {
         "baseUrl": "https://hapi-fhir.staging.mtomady.com/fhir"
       },
@@ -16,9 +15,9 @@
     {
       "id": "dhis2",
       "expression": "jobs/load-teis.js",
-      "adaptor": "@openfn/language-dhis2@latest",
+      "adaptor": "@openfn/language-dhis2@4.0.1",
       "configuration": {
-        "baseUrl": "https://hapi-fhir.staging.mtomady.com/fhir",
+        "hostUrl": "https://dhis2.staging.mtomady.com",
         "username": "admin",
         "password": "district"
       }
