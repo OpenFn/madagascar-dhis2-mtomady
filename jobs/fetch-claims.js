@@ -1,13 +1,27 @@
-// Get claim data based on webhook payload
+// Get last 10 claims and related patients from HAPI
 get(
-  state => `Claim/${state.data.claimNo}`,
-  {},
-  next => ({ ...next, claim: next.data })
-);
+  'Claim',
+  {
+    query: {
+      _include: 'Claim:patient',
+      _revinclude: '*',
+      _sort: '-_lastUpdated',
+      _count: 10,
+    },
+  },
+  next => {
+    const byType = next.data.entry.reduce((r, a) => {
+      r[a.resource.resourceType] = r[a.resource.resourceType] || [];
+      r[a.resource.resourceType].push(a);
+      return r;
+    }, Object.create(null));
 
-// Now, get the patient which is referenced in the claim
-get(
-  state => `${state.claim.patient.reference}`,
-  {},
-  next => ({ ...next, patient: next.data })
+    return {
+      ...state,
+      data: {
+        claims: byType.Claim,
+        patients: byType.Patient,
+      },
+    };
+  }
 );
