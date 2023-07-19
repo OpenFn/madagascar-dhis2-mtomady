@@ -6,7 +6,7 @@ get(
       _include: 'Claim:patient',
       _revinclude: '*',
       _sort: '-_lastUpdated',
-      _count: 10,
+      _count: 1,
     },
   },
   next => {
