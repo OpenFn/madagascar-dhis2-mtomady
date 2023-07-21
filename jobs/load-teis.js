@@ -6,7 +6,10 @@ fn(state => {
   const teis = patientsWithClaims.map(p => {
     const patient = p.resource;
     const claims = p.claims;
-    const treatments = JSON.stringify(claims.map(c => c.resource.item));
+    const treatments = claims
+      .map(c => c.resource.item[0])
+      .map(t => t.productOrService.coding[0].display)
+      .join('" ; "');
 
     const enrollments = claims.map(c => {
       const claim = c.resource;
@@ -41,7 +44,7 @@ fn(state => {
         { attribute: 'Fz33peSkK1I', value: patient.name[0].given[0] },
         {
           attribute: 'POCXiJxpYX1',
-          value: `Last imported treatments: ${treatments}`,
+          value: `Treatments imported in last sync: "${treatments}"`,
         },
         { attribute: 'dA6ShmrHmhk', value: patient.birthDate },
         { attribute: 'mWOlfweGigO', value: patient.gender },
