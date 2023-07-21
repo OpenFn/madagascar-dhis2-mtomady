@@ -18,7 +18,9 @@ fn(state => {
       };
 
       console.log(
-        `We could use OCL to map "${display}" to "${oclMapping[display]}"`
+        `We could use OCL to map "${display}" to "${
+          oclMapping[display] || 'q5Qyv66pIAI (Other)'
+        }"`
       );
 
       return {
