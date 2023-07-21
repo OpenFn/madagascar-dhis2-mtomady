@@ -41,9 +41,17 @@ fn(state => {
     .filter(p => p.resource.identifier)
     .map(p => ({
       ...p,
-      claims: claims.filter(
-        c => p.resource.id == c.resource.patient.reference.split('/')[1]
-      ),
+      claims: claims.filter(c => {
+        // console.log(JSON.stringify(c, null, 2));
+        return (
+          // has item
+          c.resource.item &&
+          // has coding
+          c.resource.item[0].productOrService.coding &&
+          // for this patient
+          p.resource.id == c.resource.patient.reference.split('/')[1]
+        );
+      }),
     }));
 
   return { ...state, data: { patientsWithClaims } };

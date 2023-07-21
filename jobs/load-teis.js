@@ -6,7 +6,7 @@ fn(state => {
   const teis = patientsWithClaims.map(p => {
     const patient = p.resource;
     const claims = p.claims;
-    const treatments = claims.map(c => c.item);
+    const treatments = JSON.stringify(claims.map(c => c.resource.item));
 
     const enrollments = claims.map(c => {
       const claim = c.resource;
@@ -23,20 +23,22 @@ fn(state => {
         orgUnit: 'KUVJPjmUmWc',
         program: oclMapping[display] || 'q5Qyv66pIAI',
         status: 'ACTIVE', // active
-        enrollmentDate: today,
-        incidentDate: today,
+        enrolledAt: today,
+        occurredAt: today,
       };
     });
 
     return {
-      program: 'GMfuAqBFS1g', // Vaccination
       orgUnit: 'KUVJPjmUmWc', // Madagascar
       trackedEntityType: 'x5fZpgCyv50', // Patient
       attributes: [
         { attribute: 'rDeWj9yYtzv', value: patient.identifier[0].value },
         { attribute: 'E4f4wBsDVgR', value: patient.name[0].family },
         { attribute: 'Fz33peSkK1I', value: patient.name[0].given[0] },
-        // { attribute: 'POCXiJxpYX1', value: JSON.stringify(treatments) },
+        {
+          attribute: 'POCXiJxpYX1',
+          value: `Last imported treatments: ${treatments}`,
+        },
         { attribute: 'dA6ShmrHmhk', value: patient.birthDate },
         { attribute: 'mWOlfweGigO', value: patient.gender },
       ],
@@ -47,13 +49,15 @@ fn(state => {
   return { ...state, teis };
 });
 
+// get current TEIs
 get('tracker/trackedEntities', {
   orgUnit: 'KUVJPjmUmWc',
   trackedEntityType: 'x5fZpgCyv50',
 });
 
+// create upsertable array
 fn(state => {
-  const { teis } = state;
+  const { configuration, teis } = state;
   const existing = state.data.instances;
 
   const createable = [];
@@ -77,9 +81,16 @@ fn(state => {
   });
 
   console.log(`${updateable.length} to update; ${createable.length} to create`);
-  console.log(JSON.stringify(updateable, null, 2));
-  return { ...state, createable, updateable };
+  const trackedEntities = [...createable, ...updateable];
+
+  return { configuration, trackedEntities, references: [] };
 });
 
 // send data to DHIS2
-create('trackedEntityInstances', state => state.createable);
+create('tracker', state => ({ trackedEntities: state.trackedEntities }), {
+  params: {
+    importStrategy: 'CREATE_AND_UPDATE',
+    atomicMode: 'OBJECT',
+    async: 'false',
+  },
+});
