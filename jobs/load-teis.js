@@ -17,7 +17,9 @@ fn(state => {
         'Santé Maternelle': 'wBUDpZSS4Bh',
       };
 
-      console.log(`We will map "${display}" to "${oclMapping[display]}"`);
+      console.log(
+        `We could use OCL to map "${display}" to "${oclMapping[display]}"`
+      );
 
       return {
         orgUnit: 'KUVJPjmUmWc',
