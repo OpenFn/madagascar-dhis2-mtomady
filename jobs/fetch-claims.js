@@ -13,7 +13,7 @@ fn(state => {
 get(
   'Claim',
   state => ({
-    query: {
+    params: {
       _lastUpdated: `ge${state.cursor}`,
       _include: 'Claim:patient',
       _sort: '-_lastUpdated',
