@@ -61,6 +61,7 @@ fn(state => {
 // print some logs and update the cursor for next time
 fn(state => {
   const { data, today } = state;
+  console.log(today);
   
   console.log("Found the following patients and claims in FHIR:")
   console.log(JSON.stringify(data.patientsWithClaims.map(p => ({
