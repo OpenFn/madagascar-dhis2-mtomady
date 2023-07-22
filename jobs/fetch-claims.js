@@ -17,7 +17,7 @@ get(
     },
   },
   next => {
-    console.log(next.data);
+    if (next.data.total == 0) return { ...next, data: { claims: [], patients: [] }}
     
     const byType = next.data.entry.reduce((r, a) => {
       r[a.resource.resourceType] = r[a.resource.resourceType] || [];
