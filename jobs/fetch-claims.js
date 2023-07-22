@@ -73,7 +73,7 @@ fn(state => {
   console.log(JSON.stringify(data.patientsWithClaims.map(p => ({
     patient: p.resource.id,
     claims: p.claims.map(c => c.resource.id)
-  }))), null, 2);
+  })), null, 2));
   
   return { data: state.data, cursor: today };
 });
