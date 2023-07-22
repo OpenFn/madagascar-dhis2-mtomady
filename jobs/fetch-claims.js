@@ -2,7 +2,6 @@
 fn(state => {
   const today = new Date().toISOString().split('T')[0];
   console.log(`Fetching all claims updated on or after ${state.cursor || '2023-07-19'}`);
-  console.log('1st today', today);
   return { ...state, today }
 });
 
@@ -18,7 +17,6 @@ get(
     },
   },
   next => {
-    console.log('second today', next.today);
     const byType = next.data.entry.reduce((r, a) => {
       r[a.resource.resourceType] = r[a.resource.resourceType] || [];
       r[a.resource.resourceType].push(a);
@@ -37,7 +35,6 @@ get(
 
 // clean and merge data
 fn(state => {
-  console.log('third today', state.today);
   const { claims, patients } = state.data;
   
   const patientsWithClaims = patients
@@ -64,7 +61,6 @@ fn(state => {
 // print some logs and update the cursor for next time
 fn(state => {
   const { data, today } = state;
-  console.log('today', today);
   
   console.log("Found the following patients and claims in FHIR:")
   console.log(JSON.stringify(data.patientsWithClaims.map(p => ({
@@ -72,7 +68,5 @@ fn(state => {
     claims: p.claims.map(c => c.resource.id)
   })), null, 2));
   
-  const finalState = { data: state.data, cursor: today };
-  console.log(finalState);
-  return finalState;
+  return { data: state.data, cursor: today };
 });
