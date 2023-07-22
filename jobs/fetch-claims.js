@@ -68,5 +68,7 @@ fn(state => {
     claims: p.claims.map(c => c.resource.id)
   })), null, 2));
   
-  return { data: state.data, cursor: today };
+  const finalState = { data: state.data, cursor: today };
+  console.log(finalState);
+  return finalState;
 });
