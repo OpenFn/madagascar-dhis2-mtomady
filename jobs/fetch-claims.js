@@ -30,11 +30,6 @@ get(
 fn(state => {
   const { claims, patients } = state.data;
 
-  // A bunch of data quality issues make for a more complex workflow...
-  // if (!claim) throw new Error('there is no claim!');
-  // if (!claim.item) throw new Error('there is no claim item!');
-  // if (!patient.name[0].given[0]) throw new Error('there is no patient!');
-  // if (!patient.identifier) throw new Error('no patient identifier');
 
   const patientsWithClaims = patients
     // drop all patients without identifiers
@@ -42,6 +37,11 @@ fn(state => {
     .map(p => ({
       ...p,
       claims: claims.filter(c => {
+
+      // A bunch of data quality issues make for a more complex workflow...
+      if (!c.resource) throw new Error('there is no claim!');
+      if (!c.resource.item) throw new Error('there is no claim item!');;
+
         // console.log(JSON.stringify(c, null, 2));
         return (
           // has item
