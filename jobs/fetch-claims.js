@@ -13,12 +13,12 @@ fn(state => {
 get(
   'Claim',
   {
-    query: {
-      _lastUpdated: 'ge2023-07-19',
+    query: state => ({
+      _lastUpdated: `ge${state.cursor}`,
       _include: 'Claim:patient',
       _sort: '-_lastUpdated',
       _count: 200,
-    },
+    }),
   },
   next => {
     
