@@ -1,3 +1,9 @@
+fn(state => {
+  const today = new Date().toISOString().split('T')[0];
+  const cursor = state.cursor || '2023-07-19'
+  return { ...state, today, cursor }
+})
+
 // Get last 10 claims and related patients from HAPI
 get(
   'Claim',
@@ -54,9 +60,9 @@ fn(state => {
 });
 
 fn(state => {
-  console.log(state.data.patientsWithClaims.map(p => JSON.stringify({
-    p: p.resource.id,
-    cl: p.claims.map(c => c.resource.id)
-  })));
-  return state;
+  console.log(JSON.strinfify(state.data.patientsWithClaims.map(p => ({
+    patient: p.resource.id,
+    claims: p.claims.map(c => c.resource.id)
+  }))), null, 2);
+  return { data: state.data };
 })
