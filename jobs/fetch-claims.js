@@ -29,19 +29,15 @@ get(
 // clean and merge data
 fn(state => {
   const { claims, patients } = state.data;
-
-
+  
+  console.log(JSON.stringify(claims, null, 2));
+  
   const patientsWithClaims = patients
     // drop all patients without identifiers
     .filter(p => p.resource.identifier)
     .map(p => ({
       ...p,
       claims: claims.filter(c => {
-
-      // A bunch of data quality issues make for a more complex workflow...
-      if (!c.resource) throw new Error('there is no claim!');
-      if (!c.resource.item) throw new Error('there is no claim item!');;
-
         // console.log(JSON.stringify(c, null, 2));
         return (
           // has item
