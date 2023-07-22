@@ -37,8 +37,6 @@ get(
 fn(state => {
   const { claims, patients } = state.data;
   
-  console.log(JSON.stringify(claims, null, 2));
-  
   const patientsWithClaims = patients
     // drop all patients without identifiers
     .filter(p => p.resource.identifier)
