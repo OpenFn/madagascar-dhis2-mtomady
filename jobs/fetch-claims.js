@@ -40,8 +40,6 @@ get(
 // clean and merge data
 fn(state => {
   const { claims, patients } = state.data;
-  
-  console.log(JSON.stringify(claims, null, 2))
   console.log(JSON.stringify(patients, null, 2))
   
   const patientsWithClaims = patients
