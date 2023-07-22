@@ -18,7 +18,7 @@ get(
     },
   },
   next => {
-    console.log('second today', state.today);
+    console.log('second today', next.today);
     const byType = next.data.entry.reduce((r, a) => {
       r[a.resource.resourceType] = r[a.resource.resourceType] || [];
       r[a.resource.resourceType].push(a);
@@ -26,7 +26,7 @@ get(
     }, Object.create(null));
 
     return {
-      ...state,
+      ...next,
       data: {
         claims: byType.Claim,
         patients: byType.Patient,
