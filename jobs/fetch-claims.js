@@ -21,13 +21,14 @@ get(
     },
   }),
   next => {
+    
+    console.log(next.data);
+    
     const byType = next.data.entry.reduce((r, a) => {
       r[a.resource.resourceType] = r[a.resource.resourceType] || [];
       r[a.resource.resourceType].push(a);
       return r;
     }, Object.create(null));
-    
-    console.log(JSON.stringify(byType, null, 2));
 
     return {
       ...state,
