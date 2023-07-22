@@ -22,7 +22,7 @@ get(
   },
   next => {
     
-    console.log(next.data);
+    console.log(next);
     
     const byType = next.data.entry.reduce((r, a) => {
       r[a.resource.resourceType] = r[a.resource.resourceType] || [];
