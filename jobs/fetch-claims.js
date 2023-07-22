@@ -56,3 +56,8 @@ fn(state => {
 
   return { ...state, data: { patientsWithClaims } };
 });
+
+fn(state => {
+  console.log(state.data.patientsWithClaims.map(p => p.resource.id));
+  return state;
+})
