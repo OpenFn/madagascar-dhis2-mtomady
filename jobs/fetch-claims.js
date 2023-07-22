@@ -12,14 +12,14 @@ fn(state => {
 // Get claims and related patients from HAPI, updated since cursor date
 get(
   'Claim',
-  {
-    query: state => ({
+  state => ({
+    query: {
       _lastUpdated: `ge${state.cursor}`,
       _include: 'Claim:patient',
       _sort: '-_lastUpdated',
       _count: 200,
-    }),
-  },
+    },
+  }),
   next => {
     
     console.log(next);
