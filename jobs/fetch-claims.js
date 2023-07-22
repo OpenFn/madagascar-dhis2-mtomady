@@ -1,29 +1,21 @@
 // establish a baseline for the cursor
 fn(state => {
   const today = new Date().toISOString().split('T')[0];
-  const cursor = state.cursor || '2023-07-19'
-  
-  console.log('t', today)
-  console.log('c', cursor);
-  
-  return { ...state, today, cursor }
-})
+  return { ...state, today }
+});
 
 // Get claims and related patients from HAPI, updated since cursor date
 get(
   'Claim',
-  state => ({
-    params: {
-      _lastUpdated: `ge${state.cursor}`,
+  {
+    query: {
+      _lastUpdated: `ge${state.cursor || '2023-07-19'}`,
       _include: 'Claim:patient',
       _sort: '-_lastUpdated',
       _count: 200,
     },
-  }),
+  },
   next => {
-    
-    console.log(next);
-    
     const byType = next.data.entry.reduce((r, a) => {
       r[a.resource.resourceType] = r[a.resource.resourceType] || [];
       r[a.resource.resourceType].push(a);
