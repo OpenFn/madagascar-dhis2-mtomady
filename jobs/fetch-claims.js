@@ -35,7 +35,6 @@ get(
 // clean and merge data
 fn(state => {
   const { claims, patients } = state.data;
-  console.log(JSON.stringify(patients, null, 2))
   
   const patientsWithClaims = patients
     // drop all patients without identifiers
@@ -62,6 +61,7 @@ fn(state => {
 fn(state => {
   const { data, today } = state;
   
+  console.log("Found the following patients and claims in FHIR:")
   console.log(JSON.stringify(data.patientsWithClaims.map(p => ({
     patient: p.resource.id,
     claims: p.claims.map(c => c.resource.id)
