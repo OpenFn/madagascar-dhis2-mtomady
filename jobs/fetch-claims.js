@@ -1,6 +1,7 @@
 // establish a baseline for the cursor
 fn(state => {
   const today = new Date().toISOString().split('T')[0];
+  console.log(`Fetching all claims updated on or after ${state.cursor || '2023-07-19'}`);
   return { ...state, today }
 });
 
