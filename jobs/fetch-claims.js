@@ -2,6 +2,7 @@
 fn(state => {
   const today = new Date().toISOString().split('T')[0];
   console.log(`Fetching all claims updated on or after ${state.cursor || '2023-07-19'}`);
+  console.log('1st today', today);
   return { ...state, today }
 });
 
@@ -17,6 +18,7 @@ get(
     },
   },
   next => {
+    console.log('second today', state.today);
     const byType = next.data.entry.reduce((r, a) => {
       r[a.resource.resourceType] = r[a.resource.resourceType] || [];
       r[a.resource.resourceType].push(a);
@@ -35,6 +37,7 @@ get(
 
 // clean and merge data
 fn(state => {
+  console.log('third today', state.today);
   const { claims, patients } = state.data;
   
   const patientsWithClaims = patients
