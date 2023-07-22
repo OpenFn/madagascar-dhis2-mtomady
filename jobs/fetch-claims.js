@@ -1,20 +1,21 @@
+// establish a baseline for the cursor
 fn(state => {
   const today = new Date().toISOString().split('T')[0];
   const cursor = state.cursor || '2023-07-19'
   return { ...state, today, cursor }
 })
 
-// Get last 10 claims and related patients from HAPI
+// Get claims and related patients from HAPI, updated since cursor date
 get(
   'Claim',
-  {
+  state => ({
     query: {
-      _lastUpdated: 'ge2023-07-19',
+      _lastUpdated: `ge${state.cursor}`,
       _include: 'Claim:patient',
       _sort: '-_lastUpdated',
       _count: 200,
     },
-  },
+  }),
   next => {
     const byType = next.data.entry.reduce((r, a) => {
       r[a.resource.resourceType] = r[a.resource.resourceType] || [];
@@ -59,10 +60,14 @@ fn(state => {
   return { ...state, data: { patientsWithClaims } };
 });
 
+// print some logs and update the cursor for next time
 fn(state => {
-  console.log(JSON.strinfify(state.data.patientsWithClaims.map(p => ({
+  const { data, today } = state;
+  
+  console.log(JSON.strinfify(data.patientsWithClaims.map(p => ({
     patient: p.resource.id,
     claims: p.claims.map(c => c.resource.id)
   }))), null, 2);
-  return { data: state.data };
-})
+  
+  return { data: state.data, cursor: today };
+});
