@@ -54,6 +54,9 @@ fn(state => {
 });
 
 fn(state => {
-  console.log(state.data.patientsWithClaims.map(p => p.resource.id));
+  console.log(state.data.patientsWithClaims.map(p => JSON.stringify({
+    p: p.resource.id,
+    cl: p.claims.map(c => c.resource.id)
+  })));
   return state;
 })
