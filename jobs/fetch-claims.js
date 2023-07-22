@@ -3,7 +3,8 @@ fn(state => {
   const today = new Date().toISOString().split('T')[0];
   const cursor = state.cursor || '2023-07-19'
   
-  console.log(state);
+  console.log('t', today)
+  console.log('c', cursor);
   
   return { ...state, today, cursor }
 })
