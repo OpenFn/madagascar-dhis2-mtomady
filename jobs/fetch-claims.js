@@ -82,10 +82,14 @@ fn(state => {
 
   console.log('Found the following patients and claims in FHIR:');
   console.log(
-    data.patientsWithClaims.map(p => ({
-      patient: p.resource.id,
-      claims: p.claims.map(c => c.resource.id),
-    }))
+    JSON.stringify(
+      data.patientsWithClaims.map(p => ({
+        patient: p.resource.id,
+        claims: p.claims.map(c => c.resource.id),
+      })),
+      null,
+      2
+    )
   );
 
   return { data: state.data, cursor: today };
