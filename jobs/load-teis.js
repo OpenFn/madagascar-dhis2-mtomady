@@ -44,7 +44,7 @@ fn(state => {
         { attribute: 'Fz33peSkK1I', value: patient.name[0].given[0] },
         {
           attribute: 'POCXiJxpYX1',
-          value: `Treatments imported in last sync: "${treatments}"`,
+          value: `"${treatments}"`,
         },
         { attribute: 'dA6ShmrHmhk', value: patient.birthDate },
         { attribute: 'mWOlfweGigO', value: patient.gender },
