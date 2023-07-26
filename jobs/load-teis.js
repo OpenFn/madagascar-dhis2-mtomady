@@ -9,7 +9,7 @@ fn(state => {
     const treatments = claims
       .map(c => c.resource.item[0])
       .map(t => t.productOrService.coding[0].display)
-      .join('" ; "');
+      .join('; ');
 
     const enrollments = claims.map(c => {
       const claim = c.resource;
@@ -44,7 +44,7 @@ fn(state => {
         { attribute: 'Fz33peSkK1I', value: patient.name[0].given[0] },
         {
           attribute: 'POCXiJxpYX1',
-          value: `"${treatments}"`,
+          value: `${treatments}`,
         },
         { attribute: 'dA6ShmrHmhk', value: patient.birthDate },
         { attribute: 'mWOlfweGigO', value: patient.gender },
