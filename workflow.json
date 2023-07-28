@@ -4,9 +4,10 @@
     {
       "id": "hapi",
       "expression": "jobs/fetch-claims.js",
-      "adaptor": "@openfn/language-http@5.0.1",
+      "adaptor": "@openfn/language-fhir@3.1.0",
       "configuration": {
-        "baseUrl": "https://hapi-fhir.staging.mtomady.com/fhir"
+        "baseUrl": "https://hapi-fhir.staging.mtomady.com",
+        "apiPath": "fhir"
       },
       "next": {
         "dhis2": "!state.error"
