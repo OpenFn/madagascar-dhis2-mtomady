@@ -17,6 +17,7 @@ fn(state => {
 
       const oclMapping = {
         PARN: 'GMfuAqBFS1g',
+        'Programme Vaccination': 'GMfuAqBFS1g',
         'Santé Maternelle': 'wBUDpZSS4Bh',
       };
 
