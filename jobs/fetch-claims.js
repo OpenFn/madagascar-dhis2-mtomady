@@ -11,12 +11,10 @@ fn(state => {
 get(
   'Claim',
   {
-    query: {
-      _lastUpdated: `ge${state.cursor || '2023-07-19'}`,
-      _include: 'Claim:patient',
-      _sort: '-_lastUpdated',
-      _count: 200,
-    },
+    _lastUpdated: `ge${state.cursor || '2023-07-19'}`,
+    _include: 'Claim:patient',
+    _sort: '-_lastUpdated',
+    _count: 200,
   },
   next => {
     if (next.data.total == 0)
